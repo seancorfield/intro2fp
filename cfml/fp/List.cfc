@@ -1,0 +1,2 @@
+﻿component extends="fp.Collection" {
+}
