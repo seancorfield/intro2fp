@@ -8,6 +8,9 @@
 	v1 = map( inc, v );
 	writeDump( var = v1, label = "map( inc, v )" );
 	
+	v2 = map( comp( inc, inc ), v );
+	writeDump( var = v2, label = "map( comp( inc, inc ), v )" );
+	
 	function add( a, b ) { return a + b; }
 	
 	n = reduce( add, v );
