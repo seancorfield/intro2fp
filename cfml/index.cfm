@@ -18,9 +18,7 @@
 	ve = filter( even, v );
 	writeDump( var = ve, label = "filter( even, v )" );
 	
-	odd = complement( even );
-	
-	vo = filter( odd, v );
-	writeDump( var = vo, label = "filter( odd, v )" );
+	vo = filter( complement( even ), v );
+	writeDump( var = vo, label = "filter( complement( even ), v )" );
 	
 </cfscript>
