@@ -44,6 +44,10 @@
 		return new fp.Compose( _not, f );
 	}
 	
+	function partial() {
+		return new fp.Partial( argumentCollection = arguments );
+	}
+	
 	// DO NOT USE THESE DIRECTLY:
 	
 	function map_array( f, coll ) {
