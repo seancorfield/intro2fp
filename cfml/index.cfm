@@ -30,4 +30,7 @@
 	v3 = map( partial( add, 10 ), v );
 	writeDump( var = v3, label = "map( partial( add, 10 ), v )" );
 	
+	v4 = partial( map, inc ).call( v );
+	writeDump( var = v4, label = "partial( map, inc ).call( v )" );
+	
 </cfscript>
