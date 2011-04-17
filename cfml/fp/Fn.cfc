@@ -1,5 +1,7 @@
 ﻿component {
 	
+	include "primitive.cfm";
+	
 	function init( f ) {
 		if ( !isCustomFunction( f ) && !( isObject( f ) && structKeyExists( f, "call" ) && isCustomFunction( f.call ) ) ) throw "Argument is not a function";
 		variables.f = f;

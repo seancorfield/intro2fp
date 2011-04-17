@@ -1,5 +1,7 @@
 ﻿component {
 	
+	include "primitive.cfm";
+	
 	function init() {
 		variables.fn = new fp.Fn( arguments[1] );
 		variables.args = [ ];

@@ -1,5 +1,7 @@
 ﻿component {
 	
+	include "primitive.cfm";
+	
 	function init() {
 		variables.fns = [ ];
 		var n = arrayLen( arguments );
