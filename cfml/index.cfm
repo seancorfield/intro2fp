@@ -16,7 +16,7 @@
 	function add( a, b ) { return a + b; }
 	
 	n = reduce( add, v );
-	writeOutput( "reduce( add, v ) = " & n & "<br />" );
+	writeOutput( "reduce( add, v ) = " & n & chr(60) & "br />" );
 	
 	// Clojure has this as even? in the core library:
 	function even( n ) { return n % 2 == 0; }
