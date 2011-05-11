@@ -1,0 +1,61 @@
+; expenses inspired by examples in Clojure in Action by Amit Rathore
+(def the-expenses 
+  [{:amount 10.0 :merchant "Amazon" :category "Book" :user "Sean"}
+   {:amount 20.0 :merchant "Amazon" :category "Toy" :user "Gert"}
+   {:amount 30.0 :merchant "Burger King" :category "Meal" :user "Mark"}
+   {:amount 40.0 :merchant "Ubuntu" :category "Software" :user "Peter"}
+   {:amount 50.0 :merchant "Sephora" :category "Cosmetics" :user "Micha"}
+   {:amount 60.0 :merchant "French Laundry" :category "Meal" :user "Sean"}
+   {:amount 70.0 :merchant "Lynda" :category "School" :user "Gert"}
+   {:amount 80.0 :merchant "Apple" :category "Software" :user "Mark"}
+   {:amount 90.0 :merchant "Powells" :category "Book" :user "Peter"}
+   {:amount 100.0 :merchant "Apple" :category "Software" :user "Micha"}
+   {:amount 110.0 :merchant "Barnes & Noble" :category "Book" :user "Sean"}
+   {:amount 120.0 :merchant "Toys'r'Us" :category "Toy" :user "Gert"}])
+
+(defn find-by-key [data k v] 
+  (filter (fn [m] (= v (m k))) data))
+
+; find all Apple purchases
+(find-by-key the-expenses :merchant "Apple")
+
+; who bought Apple?
+(map :user (find-by-key the-expenses :merchant "Apple"))
+
+; total Apple purchases
+(reduce + (map :amount (find-by-key the-expenses :merchant "Apple")))
+
+(defn total-by-key [data k v]
+  (reduce + (map :amount (find-by-key data k v))))
+
+; all merchants?
+(map :merchant the-expenses)
+
+; all distinct merchants!
+(distinct (map :merchant the-expenses))
+
+(defn unique-by-key [data k]
+  (distinct (map k data)))
+
+(defn expense-report [data k]
+  (map (fn [v]
+         {k v :total (total-by-key data k v)}) 
+       (unique-by-key data k)))
+
+(do (println "Expenses by Merchant") 
+  (expense-report the-expenses :merchant))
+(do (println "Expenses by User") 
+  (expense-report the-expenses :user))
+(do (println "Expenses by Category") 
+  (expense-report the-expenses :category))
+
+(defn richest [k]
+  (last 
+    (sort-by :total 
+             (expense-report the-expenses k))))
+
+(richest :merchant)
+(richest :user)
+(richest :category)
+
+(println "Expenses example loaded!")
