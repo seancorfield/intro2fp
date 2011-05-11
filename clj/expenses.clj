@@ -58,4 +58,10 @@
 (richest :user)
 (richest :category)
 
+; find-by-key = filter
+; total-by-key = reduce / map / find-by-key
+; unique-by-key = distinct / map
+; expense-report = map / total-by-key / unique-by-key
+; richest = last / sort-by / expense-report
+
 (println "Expenses example loaded!")
