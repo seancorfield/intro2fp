@@ -9,9 +9,6 @@
 	v1 = map( inc, v );
 	writeDump( var = v1, label = "map( inc, v )" );
 	
-	v2 = map( comp( inc, inc ), v );
-	writeDump( var = v2, label = "map( comp( inc, inc ), v )" );
-	
 	// Clojure has + in the core library that adds any number of arguments:
 	function add( a, b ) { return a + b; }
 	
@@ -23,6 +20,9 @@
 	
 	ve = filter( even, v );
 	writeDump( var = ve, label = "filter( even, v )" );
+	
+	v2 = map( comp( inc, inc ), v );
+	writeDump( var = v2, label = "map( comp( inc, inc ), v )" );
 	
 	vo = filter( complement( even ), v );
 	writeDump( var = vo, label = "filter( complement( even ), v )" );

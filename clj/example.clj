@@ -2,11 +2,11 @@
 
 (map inc v)
 
-(map (comp inc inc) v)
-
 (reduce + v)
 
 (filter even? v)
+
+(map (comp inc inc) v)
 
 (filter (complement even?) v)
 
