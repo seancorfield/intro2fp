@@ -2,53 +2,77 @@
 	
 	// DO NOT USE THESE DIRECTLY:
 	
-	function map_array( f, coll ) {
-		var result = [ ];
+	function map_primitive( f, coll ) {
+		var a = isArray( coll );
+		var result = a ? [ ] : { };
+		var i = 0;
 		for ( var x in coll ) {
+			++i;
+			var k = a ? i : x;
+			var v = a ? x : coll[ x ];
 			if ( isCustomFunction( f ) ) {
-				arrayAppend( result, f( x ) );
+				result[ k ] = f( v );
 			} else {
-				arrayAppend( result, f.call( x ) );
+				result[ k ] = f.call( v );
 			}
 		}
 		return result;
 	}
 	
-	function reduce0_array( f, coll ) {
-		var n = arrayLen( coll );
+	function reduce0_primitive( f, coll ) {
+		var a = isArray( coll );
+		var n = a ? arrayLen( coll ) : structCount( coll );
 		if ( n ) {
-			var result = coll[1];
-			for ( var i = 2; i <= n; ++i ) {
-				if ( isCustomFunction( f ) ) {
-					result = f( result, coll[i] );
+			var result = 0;
+			var i = 0;
+			for ( var x in coll ) {
+				++i;
+				var v = a ? x : coll[ x ];
+				if ( i == 1 ) {
+					result = v;
+				} else if ( isCustomFunction( f ) ) {
+					result = f( result, v );
 				} else {
-					result = f.call( result, coll[i] );
+					result = f.call( result, v );
 				}
 			}
 			return result;
 		}
-		throw "Cannot reduce empty array";
+		throw "Cannot reduce empty collection";
 	}
 	
-	function reduce1_array( init, f, coll ) {
+	function reduce1_primitive( init, f, coll ) {
+		var a = isArray( coll );
 		var result = init;
 		for ( var x in coll ) {
+			var v = a ? x : coll[ x ];
 			if ( isCustomFunction( f ) ) {
-				result = f( result, x );
+				result = f( result, v );
 			} else {
-				result = f.call( result, x );
+				result = f.call( result, v );
 			}
 		}
 		return result;
 	}
 	
-	function filter_array( pred, coll ) {
-		var result = [ ];
+	function filter_primitive( pred, coll ) {
+		var a = isArray( coll );
+		var result = a ? [ ] : { };
+		var i = 0;
 		for ( var x in coll ) {
+			var v = a ? x : coll[ x ];
 			if ( isCustomFunction( pred ) ) {
-				if ( pred( x ) ) arrayAppend( result, x );
+				if ( pred( v ) ) {
+					++i;
+					var k = a ? i : x;
+					result[ k ] = v;
+				}
 			} else {
-				if ( pred.call( x ) ) arrayAppend( result, x );
+				if ( pred.call( v ) ) {
+					++i;
+					var k = a ? i : x;
+					result[ k ] = v;
+				}
 			}
 		}
 		return result;
