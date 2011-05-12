@@ -76,13 +76,17 @@
     ([data k adjust]
       (map (fn [v]
              {k v :total (adjust (total-by-key data k v))}) 
-           (unique-by-key data k))))
+           (unique-by-key data k)))))
+(comment
   (do (println "Expenses by Merchant less tax") 
-    (expense-report the-expenses :merchant less-tax))
+    (expense-report the-expenses :merchant less-tax)))
+(comment
   (defmacro with-tax-rate [n & body]
-    `(binding [*tax-rate* ~n] (doall ~@body)))
+    `(binding [*tax-rate* ~n] (doall ~@body))))
+(comment
   (do (println "Expenses by Merchant less 0% tax") 
-    (with-tax-rate 0 (expense-report the-expenses :merchant less-tax)))
+    (with-tax-rate 0 (expense-report the-expenses :merchant less-tax))))
+(comment
   (do (println "Expenses by Merchant less 100% tax") 
     (with-tax-rate 100 (expense-report the-expenses :merchant less-tax))))
 ;;
