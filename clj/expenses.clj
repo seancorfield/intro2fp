@@ -37,10 +37,11 @@
 (defn unique-by-key [data k]
   (distinct (map k data)))
 
-(defn expense-report [data k]
-  (map (fn [v]
-         {k v :total (total-by-key data k v)}) 
-       (unique-by-key data k)))
+(defn expense-report 
+  [data k]
+    (map (fn [v]
+           {k v :total (total-by-key data k v)}) 
+         (unique-by-key data k)))
 
 (do (println "Expenses by Merchant") 
   (expense-report the-expenses :merchant))
@@ -63,5 +64,27 @@
 ; unique-by-key = distinct / map
 ; expense-report = map / total-by-key / unique-by-key
 ; richest = last / sort-by / expense-report
+
+(defn tax-adjust [rate] (+ 1 (/ rate 100.0)))
+(def *tax-rate* 8.5)
+(defn less-tax [amt] (/ amt (tax-adjust *tax-rate*)))
+
+;;
+(comment
+  (defn expense-report 
+    ([data k] (expense-report data k identity))
+    ([data k adjust]
+      (map (fn [v]
+             {k v :total (adjust (total-by-key data k v))}) 
+           (unique-by-key data k))))
+  (do (println "Expenses by Merchant less tax") 
+    (expense-report the-expenses :merchant less-tax))
+  (defmacro with-tax-rate [n & body]
+    `(binding [*tax-rate* ~n] (doall ~@body)))
+  (do (println "Expenses by Merchant less 0% tax") 
+    (with-tax-rate 0 (expense-report the-expenses :merchant less-tax)))
+  (do (println "Expenses by Merchant less 100% tax") 
+    (with-tax-rate 100 (expense-report the-expenses :merchant less-tax))))
+;;
 
 (println "Expenses example loaded!")
