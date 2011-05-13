@@ -1,4 +1,5 @@
-; expenses inspired by examples in Clojure in Action by Amit Rathore
+(ns expenses)
+;; expenses inspired by examples in Clojure in Action by Amit Rathore
 (def the-expenses 
   [{:amount 10.0 :merchant "Amazon" :category "Book" :user "Sean"}
    {:amount 20.0 :merchant "Amazon" :category "Toy" :user "Gert"}
@@ -16,22 +17,22 @@
 (defn find-by-key [data k v] 
   (filter (fn [m] (= v (m k))) data))
 
-; find all Apple purchases
+;; find all Apple purchases
 (find-by-key the-expenses :merchant "Apple")
 
-; who bought Apple?
+;; who bought Apple?
 (map :user (find-by-key the-expenses :merchant "Apple"))
 
-; total Apple purchases
+;; total Apple purchases
 (reduce + (map :amount (find-by-key the-expenses :merchant "Apple")))
 
 (defn total-by-key [data k v]
   (reduce + (map :amount (find-by-key data k v))))
 
-; all merchants?
+;; all merchants?
 (map :merchant the-expenses)
 
-; all distinct merchants!
+;; all distinct merchants!
 (distinct (map :merchant the-expenses))
 
 (defn unique-by-key [data k]
@@ -59,14 +60,14 @@
 (richest :user)
 (richest :category)
 
-; find-by-key = filter
-; total-by-key = reduce / map / find-by-key
-; unique-by-key = distinct / map
-; expense-report = map / total-by-key / unique-by-key
-; richest = last / sort-by / expense-report
+;; find-by-key = filter
+;; total-by-key = reduce / map / find-by-key
+;; unique-by-key = distinct / map
+;; expense-report = map / total-by-key / unique-by-key
+;; richest = last / sort-by / expense-report
 
 (defn tax-adjust [rate] (+ 1 (/ rate 100.0)))
-(def *tax-rate* 8.5)
+(def ^:dynamic *tax-rate* 8.5)
 (defn less-tax [amt] (/ amt (tax-adjust *tax-rate*)))
 
 ;;
